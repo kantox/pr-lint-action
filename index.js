@@ -3,7 +3,7 @@ const getConfig = require('./utils/config')
 
 const CONFIG_FILENAME = 'pr-lint.yml'
 
-const BLACKLISTED_TITLE_REGEX = /(hotfix|feature)/i
+const BLACKLISTED_TITLE_REGEX = /(hotfix\/|feature\/)/i
 
 const defaults = {
   projects: ['PROJ'],
