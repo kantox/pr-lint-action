@@ -43,7 +43,7 @@ Toolkit.run(
           return false
         }
         if (title.match(createMappedBranchRegex(head_branch))) {
-          tools.log('PR title ' + title + ' contain unexpected branch parts.')
+          tools.log('PR title ' + title + ' is ambiguous, please set a more descriptive title')
           return false
         }
       }
