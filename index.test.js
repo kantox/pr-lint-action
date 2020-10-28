@@ -19,7 +19,7 @@ describe('pr-lint-action', () => {
   const good_title_and_bad_branch = { title: '[PROJ-1234] a good PR title', ref_name: 'fix_things' }
   const bad_title_and_good_branch = { title: 'no ticket in me', ref_name: 'bug/PROJ_1234/a_good_branch' }
   const lower_case_good_title_and_branch = { title: '[proj-1234] a lower case good title', ref_name: 'bug/proj_1234/a_good_lowercase_branch' }
-  const gitflow_title_and_good_branch = { title: '[proj-1234] feature proj 1234 gitflow branch prefix in me', ref_name: 'bug/PROJ_1234/a_good_branch' }
+  const gitflow_title_and_good_branch = { title: '[proj-1234] bug PROJ 1234 a good branch branch prefix in me', ref_name: 'bug/PROJ_1234/a_good_branch' }
   const good_commits = [
     { commit: { message: "PROJ-1234 Commit 1" } },
     { commit: { message: "PROJ-1234 Commit 2" } },

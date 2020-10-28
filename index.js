@@ -3,8 +3,6 @@ const getConfig = require('./utils/config')
 
 const CONFIG_FILENAME = 'pr-lint.yml'
 
-const BLACKLISTED_TITLE_REGEX = /(hotfix\/|feature\/)/i
-
 const defaults = {
   projects: ['PROJ'],
   check_title: true,
@@ -44,8 +42,8 @@ Toolkit.run(
           tools.log('PR title ' + title + ' does not contain approved project with format [PROJECT-1234]')
           return false
         }
-        if (title.match(BLACKLISTED_TITLE_REGEX)) {
-          tools.log('PR title ' + title + ' contain unexpected parts. Ensure it does not match ' + BLACKLISTED_TITLE_REGEX)
+        if (title.match(createMappedBranchRegex(head_branch))) {
+          tools.log('PR title ' + title + ' contain unexpected branch parts.')
           return false
         }
       }
@@ -114,4 +112,8 @@ function createProjectRegex(project) {
 
 function createWrappedProjectRegex(project) {
   return new RegExp('\\[' + project + '-\\d*\\]')
+}
+
+function createMappedBranchRegex(head_branch) {
+  return new RegExp(head_branch.replace(/[^a-zA-Z0-9]/gi, ' '))
 }
