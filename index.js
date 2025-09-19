@@ -61,7 +61,7 @@ Toolkit.run(
         if (head_branch.match(/dependabot\/.+/)) {
           return true
         }
-        if (head_branch.match(/\Arelease\/.+/)) {
+        if (head_branch.match(/^release\/.+/)) {
           return true
         }
         // check the branch matches PROJECT-1234 or PROJECT_1234 somewhere
