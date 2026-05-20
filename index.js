@@ -102,7 +102,16 @@ Toolkit.run(
       tools.exit.success()
     }
   },
-  { event: ['pull_request.opened', 'pull_request.edited', 'pull_request.synchronize'], secrets: ['GITHUB_TOKEN'] }
+  {
+    event: [
+      'pull_request.opened',
+      'pull_request.edited',
+      'pull_request.synchronize',
+      'pull_request.reopened',
+      'pull_request.ready_for_review'
+    ],
+    secrets: ['GITHUB_TOKEN']
+  }
 )
 
 function findFailedCommits(projects, commitsInPR, ignoreCase) {
