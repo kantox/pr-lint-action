@@ -15,10 +15,10 @@ Toolkit.run(
   async tools => {
     const { action, repository, pull_request } = tools.context.payload
 
-    // Accept-and-skip: only lint on the original event set; for newly accepted
-    // events (ready_for_review, reopened) exit successfully without re-linting,
-    // preserving the historical behavior while keeping consumer workflows green.
-    if (action === 'ready_for_review' || action === 'reopened') {
+    // Accept-and-skip ready_for_review: exit successfully without re-linting,
+    // preserving the historical lint behavior while keeping consumer workflows
+    // that subscribe to this event green instead of erroring.
+    if (action === 'ready_for_review') {
       tools.exit.success()
       return
     }
@@ -115,7 +115,6 @@ Toolkit.run(
       'pull_request.opened',
       'pull_request.edited',
       'pull_request.synchronize',
-      'pull_request.reopened',
       'pull_request.ready_for_review'
     ],
     secrets: ['GITHUB_TOKEN']
