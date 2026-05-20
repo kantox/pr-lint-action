@@ -13,7 +13,15 @@ const defaults = {
 
 Toolkit.run(
   async tools => {
-    const { repository, pull_request } = tools.context.payload
+    const { action, repository, pull_request } = tools.context.payload
+
+    // Accept-and-skip: only lint on the original event set; for newly accepted
+    // events (ready_for_review, reopened) exit successfully without re-linting,
+    // preserving the historical behavior while keeping consumer workflows green.
+    if (action === 'ready_for_review' || action === 'reopened') {
+      tools.exit.success()
+      return
+    }
 
     const repoInfo = {
       owner: repository.owner.login,
