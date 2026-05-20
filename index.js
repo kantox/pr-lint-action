@@ -13,7 +13,15 @@ const defaults = {
 
 Toolkit.run(
   async tools => {
-    const { repository, pull_request } = tools.context.payload
+    const { action, repository, pull_request } = tools.context.payload
+
+    // Accept-and-skip ready_for_review: exit successfully without re-linting,
+    // preserving the historical lint behavior while keeping consumer workflows
+    // that subscribe to this event green instead of erroring.
+    if (action === 'ready_for_review') {
+      tools.exit.success()
+      return
+    }
 
     const repoInfo = {
       owner: repository.owner.login,
@@ -102,7 +110,15 @@ Toolkit.run(
       tools.exit.success()
     }
   },
-  { event: ['pull_request.opened', 'pull_request.edited', 'pull_request.synchronize'], secrets: ['GITHUB_TOKEN'] }
+  {
+    event: [
+      'pull_request.opened',
+      'pull_request.edited',
+      'pull_request.synchronize',
+      'pull_request.ready_for_review'
+    ],
+    secrets: ['GITHUB_TOKEN']
+  }
 )
 
 function findFailedCommits(projects, commitsInPR, ignoreCase) {
