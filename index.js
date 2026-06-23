@@ -72,6 +72,9 @@ Toolkit.run(
         if (head_branch.match(/^release\/.+/)) {
           return true
         }
+        if (head_branch.match(/^(develop|master|main)$/)) {
+          return true
+        }
         // check the branch matches PROJECT-1234 or PROJECT_1234 somewhere
         if (!projects.some(project => head_branch.match(createProjectRegex(project)))) {
           tools.log('PR branch ' + head_branch + ' does not contain an approved project with format PROJECT-1234 or PROJECT_1234')
